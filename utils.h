@@ -4,6 +4,8 @@
 #ifndef GWLBTUN_UTILS_H
 #define GWLBTUN_UTILS_H
 
+#include <unistd.h>
+#include <sys/syscall.h>
 #include <iostream>
 #include <iomanip>
 #include <cctype>
@@ -21,6 +23,11 @@ extern std::ostream *debugout;
 extern std::ostream *hexout;
 extern int debug;
 
+#ifndef SYS_gettid
+#error "SYS_gettid unavailable on this system"
+#endif
+
+#define gettid() ((pid_t)syscall(SYS_gettid))
 #define DEBUG_ON       1
 #define DEBUG_VERBOSE  2
 
